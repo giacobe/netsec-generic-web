@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <base href="{{LAB_BASE}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{LAB_TITLE}}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ASSET_BASE}}css/xterm.css">
+  <link rel="stylesheet" href="{{ASSET_BASE}}css/styles.css?v=8">
+
+  <script>
+    window.NETSEC_LAB_CONFIG = {{LAB_CONFIG}};
+  </script>
+</head>
+<body class="netsec-dark" data-lab-md="{{LAB_MD}}">
+  <header id="header">
+    <div class="brand-group">
+      <div class="threat-dot"></div>
+      <h1 id="lab-title">{{LAB_TITLE}}</h1>
+    </div>
+
+    <div id="status" aria-live="polite">Initializing...</div>
+
+    <div class="header-actions">
+      <button class="hbtn hbtn-info" id="btn-theme" type="button">Light Theme</button>
+      <button class="hbtn hbtn-reset" id="btn-reset" type="button">Reset Lab</button>
+      <button class="hbtn hbtn-endlab" id="btn-endlab" type="button">End Lab</button>
+    </div>
+  </header>
+
+  <main id="container" class="two-panel-layout">
+    <aside id="guide-panel" aria-label="Participant instructions">
+      <div class="panel-header">
+        <div class="vm-dot"></div>
+        <span id="guide-panel-title">{{GUIDE_TITLE}}</span>
+        <div class="panel-tools" aria-label="Instruction font size">
+          <button class="panel-tool" id="guide-font-decrease" type="button" aria-label="Decrease instruction font size">A-</button>
+          <span class="font-size-value" id="guide-font-value" aria-live="polite">12pt</span>
+          <button class="panel-tool" id="guide-font-increase" type="button" aria-label="Increase instruction font size">A+</button>
+        </div>
+      </div>
+      <div id="guide-scroll">
+        <div class="instructions-loading">Loading instructions...</div>
+      </div>
+    </aside>
+
+    <section class="vm-panel" id="panel_linux" aria-label="{{VM_LABEL}}">
+      <div class="vm-header linux">
+        <div class="vm-dot"></div>
+        <span id="vm-label">{{VM_LABEL}}</span>
+        <span class="vm-badge" id="vm-badge">{{VM_BADGE}}</span>
+        <div class="panel-tools" aria-label="Terminal font size">
+          <button class="panel-tool" id="terminal-font-decrease" type="button" aria-label="Decrease terminal font size">A-</button>
+          <span class="font-size-value" id="terminal-font-value" aria-live="polite">14px</span>
+          <button class="panel-tool" id="terminal-font-increase" type="button" aria-label="Increase terminal font size">A+</button>
+        </div>
+      </div>
+      <div class="vm-container" id="linux_container">
+        <div id="vm-load-error" role="alert" hidden></div>
+        <div id="boot-overlay" hidden role="status" aria-live="polite">
+          <div class="boot-card">
+            <h2 id="boot-stage">Downloading lab images</h2>
+            <p id="boot-detail">Startup may take about two minutes. No login is required.</p>
+            <progress id="boot-progress" aria-label="Current asset download"></progress>
+            <p id="boot-elapsed" aria-live="off">Elapsed: 0:00</p>
+            <p>You can select Terminal above to inspect startup.</p>
+          </div>
+        </div>
+        <div id="vm-view-controls" hidden>
+          <button class="hbtn hbtn-info" id="btn-desktop" type="button">Desktop</button>
+          <button class="hbtn hbtn-info" id="btn-terminal" type="button">Terminal</button>
+          <button class="hbtn hbtn-info" id="btn-capture-mouse" type="button">Capture mouse</button>
+          <span id="mouse-capture-status" role="status">Click the desktop to capture the mouse. Escape releases it.</span>
+        </div>
+        <div id="linux_screen" tabindex="0" aria-label="Virtual machine desktop" hidden>
+          <div style="white-space:pre;font:14px monospace;line-height:14px"></div>
+          <canvas style="display:none"></canvas>
+        </div>
+        <div id="linux_serial" class="term linux" tabindex="0"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="endlab-overlay" role="dialog" aria-modal="true" aria-labelledby="endlab-title" aria-hidden="true">
+    <div class="endlab-card">
+      <div class="endlab-check" aria-hidden="true">&#10003;</div>
+      <h2 class="endlab-title" id="endlab-title">Lab Complete</h2>
+      <p class="endlab-sub">{{LAB_TITLE}} - Session Summary</p>
+      <div class="endlab-time-label">Time Spent</div>
+      <div class="endlab-time" id="endlab-time-display">00:00</div>
+      <div class="endlab-time-sub">minutes : seconds</div>
+      <div class="endlab-footer">
+        <button class="hbtn hbtn-info" id="btn-back-to-lab" type="button">Back to Lab</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ASSET_BASE}}lib/libv86.js?v=4"></script>
+  <script src="{{ASSET_BASE}}lib/xterm.js?v=4"></script>
+  <script src="{{ASSET_BASE}}lib/xterm-addon-fit.js?v=4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="{{ASSET_BASE}}js/boot-status.js?v=2"></script>
+  <script src="{{ASSET_BASE}}js/ui.js?v=9"></script>
+  <script src="{{ASSET_BASE}}js/terminal.js?v=4"></script>
+  <script src="{{ASSET_BASE}}js/instructions.js?v=4"></script>
+  <script src="{{ASSET_BASE}}js/networking.js?v=4"></script>
+  <script src="{{ASSET_BASE}}js/computers.js?v=1"></script>
+  <script src="{{ASSET_BASE}}js/vm-init.js?v=8"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Web Client and Server</title>
+  <script>
+    // Some static hosts serve directory URLs without redirecting to a slash.
+    // Resolve assets from this lab directory in either URL form.
+    const labUrl = new URL(window.location.href);
+    if (!labUrl.pathname.endsWith("/") && !labUrl.pathname.endsWith("/index.html")) {
+      labUrl.pathname += "/";
+    }
+    const base = document.createElement("base");
+    base.href = new URL("./", labUrl).href;
+    document.head.appendChild(base);
+    window.NETSEC_LAB = {
+      title: "Web Lab", assetBase: "../", template: "../lab-template.html", bootStatus: true,
+      md: "./instructions.md", guideTitle: "Connectivity Guide",
+      computers: [{
+        label: "Web Client", badge: "10.0.0.20", display: "graphical", memoryMiB: 384,
+        bzimage: "./images/client-bzImage", initrd: "./images/client-rootfs.cpio.gz?v=netsurf-3"
+      },
+      { label: "Web Server", badge: "10.0.0.10", display: "serial", memoryMiB: 128,
+        bzimage: "./images/server-bzImage", initrd: "./images/server-rootfs.cpio.gz?v=2" }]
+    };
+  </script>
+  <script src="../js/lab-loader.js?v=8" defer></script>
+</head>
+<body>Loading web client and server...</body>
+</html>
